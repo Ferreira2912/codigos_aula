@@ -30,9 +30,9 @@ function App() {
 
       <p>{contador}</p>
 
-      <button onClick={diminuir} class="button-27">Diminuir</button> 
-      <button onClick={resetar} class="button-27">Resetar</button>
-      <button onClick={adicionar} class="button-27">Aumentar</button>
+      <button onClick={diminuir} class="but-menos">Diminuir</button> 
+      <button onClick={resetar} class="but-reset">Resetar</button>
+      <button onClick={adicionar} class="but-mais">Aumentar</button>
     </div>
   );
 }

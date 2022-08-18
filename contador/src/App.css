@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding: 123px;
+  border: 8px solid #1d1d1d;
+  background-color: #1d1d1d;
+  font-size: 40px;
+  color: whitesmoke;
 }
 
 .App-logo {
@@ -44,16 +50,51 @@ button {
   flex-wrap: wrap;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5px;
-  width: 70px;
-  height: 30px;
+  margin-top: 13px;
+  width: 150px;
+  height: 50px;
   border-radius: 8px;
   border: none;
-  background-color: #1d1d1d;
+  background-color: #103a5c86;
   color:aliceblue;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  font-size: 20px;
 }
 
 button:hover {
-  box-shadow: blue 2px 2px;
+  box-shadow: rgba(44, 63, 233, 0.281) 0 8px 15px;
+  transform: translateY(-2px);
 }
 
+button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.but-menos {
+  background-color: #f000008e;
+}
+
+.but-menos:hover {
+  box-shadow: rgba(233, 44, 44, 0.281) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.but-reset {
+  background-color: #0060f08e;
+}
+
+.but-reset:hover {
+  box-shadow: rgba(72, 44, 233, 0.281) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+
+.but-mais {
+  background-color: #00f00c8e;
+}
+
+.but-mais:hover {
+  box-shadow: rgba(44, 233, 69, 0.281) 0 8px 15px;
+  transform: translateY(-2px);
+}
