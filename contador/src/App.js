@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import { IoCaretUp } from "react-icons/io5";
+import { IoCaretDown } from "react-icons/io5";
+import { IoReload } from "react-icons/io5";
 
 function App() {
 
@@ -29,10 +32,12 @@ function App() {
 
 
       <p>{contador}</p>
+      
+      <button onClick={adicionar} class="but-mais"><IoCaretUp /></button>
+      <button onClick={resetar} class="but-reset"><IoReload /></button>
+      <button onClick={diminuir} class="but-menos"><IoCaretDown /></button> 
 
-      <button onClick={diminuir} class="but-menos">Diminuir</button> 
-      <button onClick={resetar} class="but-reset">Resetar</button>
-      <button onClick={adicionar} class="but-mais">Aumentar</button>
+
     </div>
   );
 }
