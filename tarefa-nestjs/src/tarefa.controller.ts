@@ -15,11 +15,11 @@ export class TarefaController{
     @Put("/tarefa")
     salvarTarefa(@Body() tarefa) {
         //@Body receber do corpo da aquisição//
-        let index = this.tarefaLista.findIndex(t => t.id == tarefa.id);
+        let index = this.tarefaLista.findIndex(t => t.codigo == tarefa.codigo);
         if(index >= 0) {
             this.tarefaLista[index].descricao = tarefa.descricao;
         } else {
-            tarefa.id = Math.random().toString(36);
+            tarefa.codigo = Math.random().toString(36);     
             this.tarefaLista.push(tarefa);
         }
         return "ok";

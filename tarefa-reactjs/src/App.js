@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
 
-  const [id, setId] = useState(); 
+  const [codigo, setCodigo] = useState(); 
   const [descricao, setDescricao] = useState();
   const [listaTarefa, setListaTarefa] = useState([]);
  
@@ -15,7 +15,6 @@ function App() {
 
   function buscar() {
     axios.get('http://localhost:3100/tarefa').then(resultado => {
-      console.log(resultado.data);
       setListaTarefa(resultado.data); 
     })
   }
@@ -24,28 +23,30 @@ function App() {
     event.preventDefault();
 
       let tarefa = {
-      id: id,
+      codigo: codigo,
       descricao: descricao
     };
-    console.log('tarefa', tarefa);
 
     axios.put('http://localhost:3100/tarefa', tarefa).then(() => {
       buscar();
-    });
-  }
-  
 
-  function editar(id) {
-    axios.get('http://localhost:3100/tarefa/' + id).then((resultado) => {
-      setId(resultado.data.id);
+      setCodigo();
+      setDescricao('');
+    });
+  
+  }
+
+  function editar(tarefa) {
+    axios.get(`http://localhost:3100/tarefa/${tarefa.codigo}`).then((resultado) => {
+      setCodigo(resultado.data.codigo);
       setDescricao(resultado.data.descricao);
       
     })
     buscar();
   }
 
-  function excluir(id) {
-    axios.delete('http://localhost:3100/tarefa/' + id).then((resultado) => {
+  function excluir(tarefa) {
+    axios.delete(`http://localhost:3100/tarefa/${tarefa.codigo}`).then((resultado) => {
       buscar();
     })
   }
@@ -79,16 +80,16 @@ function App() {
             listaTarefa.map((tarefa, index) => (
             <tr key={index}>
               <td>{tarefa.descricao}</td>
-              <td><button className="botaoEditar" onClick={() => editar(tarefa.id)}>Editar</button></td>
-              <td><button className="botaoExcluir" onClick={() => excluir(tarefa.id)}>Excluir</button></td>
+              <td><button className="botaoEditar" onClick={(event) => editar(tarefa)}>Editar</button></td>
+              <td><button className="botaoExcluir" onClick={(event) => excluir(tarefa)}>Excluir</button></td>
             </tr>
             ))
-          }
+            }
           
         </tbody>
       </table>
     </div>
   );
-}
+          } 
 
 export default App;
