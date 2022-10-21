@@ -1,37 +1,34 @@
 import { Controller, Get } from "@nestjs/common";
 import { Body, Delete, Param, Put } from "@nestjs/common/decorators";
+import { TarefaService } from './tarefa.sevice';
+import { Tarefa } from './tarefa.entity'; 
 
 @Controller()
-export class TarefaController{
+export class TarefaController {
 
-    tarefaLista = []; //{codigo: '', descricao: ''}
+    constructor(
+        tarefaService: TarefaService
+    ) {}
 
     @Get("/tarefa")
-    listaTarefa() {
-        return this.tarefaLista;
-        //--this-- para utilizar atributos dentro das ações//
+    async listaTarefa(): Promise<Tarefa> {
+        return await this.tarefaService.findAll();
     }
 
     @Put("/tarefa")
-    salvarTarefa(@Body() tarefa) {
-        //@Body receber do corpo da aquisição//
-        let index = this.tarefaLista.findIndex(t => t.codigo == tarefa.codigo);
-        if(index >= 0) {
-            this.tarefaLista[index].descricao = tarefa.descricao;
-        } else {
-            tarefa.codigo = Math.random().toString(36);     
-            this.tarefaLista.push(tarefa);
-        }
-        return "ok";
+    async salvarTarefa(@Body() tarefa) {
+        
+        await this.tarefaService.salvar(tarefa);
+
+        return 'ok';
     }
 
-    @Get("/tarefa/:codigo")
-    buscarPorCodigo(@Param() parametro) {
-        //@param é o objeto como algum oarametro, por meio disso pode requisitar informações np final da URL.
-        //Ex:localhost:3100/tarefa/007 007 = codigo
-        console.log(parametro.codigo); //pega o :codigo da url
-        let tarefa = this.tarefaLista.find(tarefa => tarefa.codigo == parametro.codigo);
-        return tarefa;
+
+    @Get ('/tarefa/:codigo')
+    async buscarPorCodigo(@Param() Parametro): Promise<Tarefa> {
+        console.log(parametro.codigo);
+
+        return await this.tarefaService.findById(parametro.codigo)
     }
 
     @Delete("/tarefa/:codigo")
