@@ -1,40 +1,42 @@
 import { Controller, Get } from "@nestjs/common";
 import { Body, Delete, Param, Put } from "@nestjs/common/decorators";
-import { TarefaService } from './tarefa.sevice';
-import { Tarefa } from './tarefa.entity'; 
 
 @Controller()
-export class TarefaController {
+export class TarefaController{
 
-    constructor(
-        tarefaService: TarefaService
-    ) {}
+    tarefaLista = [];
 
     @Get("/tarefa")
-    async listaTarefa(): Promise<Tarefa> {
-        return await this.tarefaService.findAll();
-    }
-
+        listaTarefa(){
+            return this.tarefaLista;
+        }
+    
     @Put("/tarefa")
-    async salvarTarefa(@Body() tarefa) {
-        
-        await this.tarefaService.salvar(tarefa);
-
-        return 'ok';
+    salvarTarefa(@Body() tarefa){
+        // @Body é a requisiçao de algum dados inserido dentro do site
+        let index = this.tarefaLista.findIndex(t => t.codigo == tarefa.codigo);
+        if(index >= 0) {
+            this.tarefaLista[index].descricao = tarefa.descricao;
+        } else {
+            tarefa.codigo = Math.random().toString(36);
+            this.tarefaLista.push(tarefa);
+            return "ok";
+        }        
     }
 
-
-    @Get ('/tarefa/:codigo')
-    async buscarPorCodigo(@Param() Parametro): Promise<Tarefa> {
-        console.log(parametro.codigo);
-
-        return await this.tarefaService.findById(parametro.codigo)
+    @Get("/tarefa/:codigo")
+    buscarPorCod(@Param() parametro){
+        // @param é o objeto como algum parametro, por meio disso pode requisitar informaçoes no final da URL.  Ex: localhost:3100/tarefa/12  12=codigo
+        console.log(parametro)
+        let tarefa = this.tarefaLista.find(tarefa => tarefa.codigo == parametro.codigo);
+        return tarefa;
     }
 
     @Delete("/tarefa/:codigo")
-    excluirTarefa(@Param() parametro) {
+    excluirTarefa(@Param() parametro){
         let index = this.tarefaLista.findIndex(tarefa => tarefa.codigo == parametro.codigo);
-        this.tarefaLista.splice(index, 1);
-        return "ok";
+        console.log(index);
+        this.tarefaLista.splice(index, 1)
+        return "excluido"
     }
 }
