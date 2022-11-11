@@ -27,4 +27,3 @@ export class TarefaService {
         await this.tarefaRepository.delete(codigo);
     }
 }
-
