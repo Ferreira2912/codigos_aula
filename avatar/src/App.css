@@ -68,3 +68,12 @@
   margin-bottom: 50px;
 }
 
+#tit_avatar {
+  margin-left: 50px;
+  margin-top: 50px;
+  font-size: 50px;
+}
+
+.lista_links {
+  text-decoration: none;
+}
